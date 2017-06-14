@@ -212,6 +212,49 @@ class LDA(object):
     print ('Size of model = {}'.format(sys.getsizeof(self.model)))
         
 
+  def test(self, model_file='', db_name=''):
+    """Test LDA model on a database
+
+    Args:
+     model_file(str): name of file containing an older model to load and train
+     db_name(str): name of database to train on
+    """ 
+
+    if not db_name or not isinstance(db_name,str):
+      print "Please provide a non empty str for the db_name arg"
+      return
+
+    else:
+      if db_name in self.databases:
+        return self.test_on_db(model_file, db_name)
+      
+    print "Warning: no valid datbase name provided. No training done."
+
+
+  def test_on_db(self, model_file='', db_name=''):
+    """Test on the given database
+    Args:
+     model_file(str): name of file containing an older model to load and train
+     db_name(str): name of database to train on
+
+    """
+
+    if model_file:
+      topic_dist = list()
+      topics_list = list()
+      assert(os.path.isfile(model_file)), "Invalid model file path"
+      db = self.databases[db_name]
+      word2idx = self.word2idx
+      tmp_model = models.ldamodel.LdaModel(num_topics=self.num_topics, id2word = word2idx)
+      self.model = tmp_model.load(model_file)
+      for t in self.test_set:
+        topic_dist.append(self.model.get_document_topics(t))
+        topics_list.append(self.model.show_topics(num_topics = self.num_topics, num_words = 10))
+      return topic_dist, topics_list
+    else:
+      print "No model file provided to test."
+      return
+    
   
   def create_dict(self, data_dir):
     """Creates a dictionary object from the training data
@@ -306,3 +349,12 @@ class LDA(object):
     else:
       print "No model trained yet."
 
+  def load_model(self, file_name=''):
+    """Save model
+    Args: 
+      file_name(str): file to load the lda model to 
+
+    """ 
+
+    assert(os.path.isfile(file_name)), 'Invalid file path to load dictionary'
+    self.model.load(file_name)

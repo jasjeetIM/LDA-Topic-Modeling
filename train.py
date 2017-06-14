@@ -90,7 +90,7 @@ if __name__ == '__main__':
   parser.add_argument("--use_mini_batches", help="bool for training on mini batches or entire dataset", action='store_true')
   parser.add_argument("--batch_size", help="Provide the batch_size during training", default=1000, type=int)
   parser.add_argument("--num_epochs", help="Provide the number of epochs to train for", default=1, type=int)
-  parser.add_argument("--num_topics", help="Provide the number of topics to run lda", default=8, type=int)
+  parser.add_argument("--num_topics", help="Provide the number of topics to run lda", default=10, type=int)
   parser.add_argument("--model_file", help="Provide the path to the model object that needs to be trained", default='', type=str)
   parser.add_argument("--dict_file", help="Provide the path to the dict object that needs to be loaded", default='./dict/dictionary', type=str)
   parser.add_argument("--visualize", help="1 means visualize training and results, 0 means don't visualize", action='store_true')
