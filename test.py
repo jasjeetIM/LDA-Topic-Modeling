@@ -37,7 +37,10 @@ def test_lda(model_file, dict_file, dbs_dir):
         del db
         gc.collect()
   
-  print test_results   
+  #Print test results
+  print test_results
+  #Show top words for each topic 
+  print lda.model.show_topics()
 
 if __name__ == '__main__':
   parser = ArgumentParser()
