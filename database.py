@@ -1,6 +1,5 @@
 #! /usr/bin/python
 # Author: Jasjeet Dhaliwal
-# Date: 6/10/2017
 
 import sys,os, pickle, random, math, gc, codecs
 from nltk import word_tokenize

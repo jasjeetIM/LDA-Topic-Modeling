@@ -1,6 +1,5 @@
 #!/usr/bin/python
 #Author: Jasjeet Dhaliwal
-#Date: 6/10/2017
 
 import sys, os, math, gc, codecs,pickle
 from database import Database

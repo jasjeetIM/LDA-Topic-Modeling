@@ -1,6 +1,5 @@
 #!/usr/bin/python
 # Author: Jasjeet Dhaliwal
-# Date: 6/10/2017
 
 import os, sys, gc
 from database import Database
