@@ -240,17 +240,16 @@ class LDA(object):
     """
 
     if model_file:
-      topic_dist = list()
-      topics_list = list()
       assert(os.path.isfile(model_file)), "Invalid model file path"
       db = self.databases[db_name]
       word2idx = self.word2idx
       tmp_model = models.ldamodel.LdaModel(num_topics=self.num_topics, id2word = word2idx)
       self.model = tmp_model.load(model_file)
-      for t in self.test_set:
-        topic_dist.append(self.model.get_document_topics(t))
-        topics_list.append(self.model.show_topics(num_topics = self.num_topics, num_words = 10))
-      return topic_dist, topics_list
+      topic_dist = self.model.get_document_topics(db.test_set[0])
+      topic_coherence = self.model.top_topics(db.test_set)
+
+      return topic_dist, topic_coherence
+
     else:
       print "No model file provided to test."
       return
