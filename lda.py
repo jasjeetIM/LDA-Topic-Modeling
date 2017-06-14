@@ -248,8 +248,10 @@ class LDA(object):
                   tokenized_texts.append(stem_tokens)
                   files_read+=1
 
-                  if not (files_read % 1000):
+                  if not (files_read % 5000):
                     print ('Files completed : {}, Number of tokens in last file: {}'.format(files_read, len(tokenized_texts[-1])))
+                    with open('./tmp/tokenized_texts_'+str(files_read), 'w') as f:
+                      pickle.dump([tokenized_texts], f)
 
                   #Clear up unused variables for efficient mem usage
                   del doc
@@ -285,10 +287,11 @@ class LDA(object):
       file_path(str): absolute or relative path of file to store the db in
     """
     
-    assert(os.path.isfile(file_path)), 'Invalid file path to load db'
+    assert(os.path.isfile(file_path)), 'Invalid file path to load dictionary'
 
     with open(file_path) as f:
-      self.word2idx = pickle.load(f)
+      word2idx = pickle.load(f)
+      self.word2idx = word2idx[0]
 
 
   def save_model(self, file_name=''):

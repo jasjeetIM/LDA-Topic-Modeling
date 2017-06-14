@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # Author: Jasjeet Dhaliwal
 
-import sys,os, pickle, random, math, gc, codecs
+import sys,os, pickle, random, math, gc, codecs, time
 from nltk import word_tokenize
 from nltk.stem.porter import PorterStemmer
 from stop_words import get_stop_words
@@ -268,18 +268,20 @@ class Database(object):
     """
     
     assert(os.path.isfile(file_path)), 'Invalid file path to load db'
-
+    print ('Loading database from file {}'.format(file_path))
     with open(file_path) as f:
-      self.train_set,\
-      self.test_set,\
-      self.stop_words,\
-      self.stemmer,\
-      self.files_read,\
-      self.tokenized_texts,\
-      self.word_to_id,\
-      self.train_epoch_idx,\
-      self.batch_size,\
-      self.db_name = pickle.load(f)
+      attr = pickle.load(f)
+      self.train_set = attr[0]
+      self.test_set = attr[1]
+      self.stop_words = attr[2]
+      self.stemmer = attr[3]
+      self.files_read = attr[4]
+      self.tokenized_texts = attr[5]
+      self.word_to_id = attr[6]
+      self.train_epoch_idx = attr[7]
+      self.batch_size = attr[8]
+      self.db_name = attr[9]
+    print 'Successfully loaded database.'
 
   def prep_train_epoch(self, batch_size=1, num_epochs=1):
     """ Prepare the training corpus for one epoch by splitting the training
