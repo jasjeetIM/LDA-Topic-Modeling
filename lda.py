@@ -246,7 +246,7 @@ class LDA(object):
       tmp_model = models.ldamodel.LdaModel(num_topics=self.num_topics, id2word = word2idx)
       self.model = tmp_model.load(model_file)
       topic_dist = self.model.get_document_topics(db.test_set[0])
-      topic_coherence = self.model.top_topics(db.test_set)
+      topic_coherence = self.model.top_topics(db.train_set)
 
       return topic_dist, topic_coherence
 
