@@ -26,7 +26,7 @@ def test_lda(model_file, dict_file, dbs_dir):
     for d in files:
         db = Database()
         #Load database object from saved file
-        db.load_from_disk(data_dir + '/' + d)
+        db.load_from_disk(dbs_dir + '/' + d)
 
         #Add database to model 
         lda.add_database(db)  
@@ -38,9 +38,17 @@ def test_lda(model_file, dict_file, dbs_dir):
         gc.collect()
   
   #Print test results
-  print test_results
-  #Show top words for each topic 
+  for idx, i in enumerate(test_results):
+    print ('Test results for database {}'.format(idx))
+    for j in i[0]:
+      print ('Topic: {} has probability: {}'.format(j[0], j[1]))
+    counter = 0
+    for k in i[1]:
+      print ('Topic {} has topic-coherence score: {}'.format(counter, k[1]))
+      counter+=1
+   
   print lda.model.show_topics()
+
 
 if __name__ == '__main__':
   parser = ArgumentParser()
@@ -48,4 +56,4 @@ if __name__ == '__main__':
   parser.add_argument("--dict_file", help="Provide the path to the dict object that needs to be loaded", default='./dict/dictionary', type=str)
   parser.add_argument("--db_dir", help="Provide path to database on which to test", default='./databases/', type=str)
   args = parser.parse_args()
-  test_lda(args.model_file, args.dict_file, args.load_dbs)
+  test_lda(args.model_file, args.dict_file, args.db_dir)
